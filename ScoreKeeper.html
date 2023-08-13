@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Score Keeper</title>
+    <script
+      crossorigin
+      src="https://unpkg.com/react@18/umd/react.development.js"
+    ></script>
+    <script
+      crossorigin
+      src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"
+    ></script>
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+  </head>
+  <body>
+    <div id="root" style="text-align: center"></div>
+    <script type="text/babel">
+      let score = 0;
+      let wicket = 0;
+      let hit = 0;
+      let ballWiseRes = [];
+      const inputRef = React.createRef();
+
+      function addScore(num) {
+        hit = num;
+        // console.log(hit);
+        rootElement.render(<App />);
+      }
+
+      function wicketDown() {
+        hit = "Out";
+        // console.log(hit);
+        rootElement.render(<App />);
+      }
+      function handelSubmit(event) {
+        event.preventDefault();
+        if (hit === "Out") {
+          if (wicket < 10) {
+            wicket += 1;
+          } else {
+            alert("Match over");
+          }
+        } else {
+          score += hit;
+        }
+        ballWiseRes.unshift(
+          <span>{`${hit == 0 ? "DOT" : hit}, ${inputRef.current.value}`}</span>
+        );
+        // console.log(score, wicket);
+        hit = 0;
+        inputRef.current.value = "";
+        rootElement.render(<App />);
+      }
+      const Form = () => (
+        <form onSubmit={handelSubmit}>
+          <input value={hit} />
+          <input ref={inputRef} placeholder="Add a comment" />
+          <button>Submit</button>
+        </form>
+      );
+
+      const ScroeButtons = () => (
+        <div>
+          <button onClick={() => addScore(0)}>0</button>
+          <button onClick={() => addScore(1)}>1</button>
+          <button onClick={() => addScore(2)}>2</button>
+          <button onClick={() => addScore(3)}>3</button>
+          <button onClick={() => addScore(4)}>4</button>
+          <button onClick={() => addScore(5)}>5</button>
+          <button onClick={() => addScore(6)}>6</button>
+          <button onClick={wicketDown}>Wicket</button>
+        </div>
+      );
+
+      const App = () => (
+        <>
+          <h1>Sccre Keeper App</h1>
+          <h2>
+            {" "}
+            Score:{score}/{wicket}
+          </h2>
+          <ScroeButtons />
+          <br />
+          <br />
+          <Form />
+          <hr />
+          <div>
+            {ballWiseRes.map((res, index) => (
+              <p key={index + 1}>{res}</p>
+            ))}
+          </div>
+        </>
+      );
+
+      const rootElement = ReactDOM.createRoot(document.getElementById("root"));
+      rootElement.render(<App />);
+    </script>
+  </body>
+</html>
