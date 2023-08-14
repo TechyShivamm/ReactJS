@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <script
+      crossorigin
+      src="https://unpkg.com/react@18/umd/react.development.js"
+    ></script>
+    <script
+      crossorigin
+      src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"
+    ></script>
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+
+    <title>React App</title>
+  </head>
+  <body>
+    <div id="root"></div>
+    <script type="text/babel">
+      let car = 0;
+      let bike = 0;
+      let scooty = 0;
+      let bicycle = 0;
+
+      function handelIncrement(vehicle) {
+        if (vehicle === "car") car++;
+        else if (vehicle === "bike") bike++;
+        else if (vehicle === "scooty") scooty++;
+        else if (vehicle === "bicycle") bicycle++;
+        rootElement.render(<App />);
+      }
+      function handelDecrement(vehicle) {
+        if (vehicle === "car" && car > 0) car--;
+        else if (vehicle === "bike" && bike > 0) bike--;
+        else if (vehicle === "scooty" && scooty > 0) scooty--;
+        else if (vehicle === "bicycle" && bicycle > 0) bicycle--;
+        rootElement.render(<App />);
+      }
+
+      const App = () => (
+        <>
+          <h1>List of all the vehicle count in the parking</h1>
+          <ol>
+            <li>
+              <p>
+                <b> Car:{car}</b> &emsp;
+                <button onClick={() => handelIncrement("car")}>Increase</button>
+                <button onClick={() => handelDecrement("car")}>Decrease</button>
+              </p>
+            </li>
+            <li>
+              <p>
+                <b> Bike:{bike}</b> &emsp;
+                <button onClick={() => handelIncrement("bike")}>
+                  Increase
+                </button>
+                <button onClick={() => handelDecrement("bike")}>
+                  Decrease
+                </button>
+              </p>
+            </li>
+            <li>
+              <p>
+                <b> Scooty:{scooty}</b> &emsp;
+                <button onClick={() => handelIncrement("scooty")}>
+                  Increase
+                </button>
+                <button onClick={() => handelDecrement("scooty")}>
+                  Decrease
+                </button>
+              </p>
+              <li>
+                <p>
+                  <b> Bicycle:{bicycle}</b> &emsp;
+                  <button onClick={() => handelIncrement("bicycle")}>
+                    Increase
+                  </button>
+                  <button onClick={() => handelDecrement("bicycle")}>
+                    Decrease
+                  </button>
+                </p>
+              </li>
+            </li>
+          </ol>
+        </>
+      );
+      const rootElement = ReactDOM.createRoot(document.getElementById("root"));
+      rootElement.render(<App />);
+    </script>
+  </body>
+</html>
