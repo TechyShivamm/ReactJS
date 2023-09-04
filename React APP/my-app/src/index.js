@@ -1,7 +1,7 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
-// import "./index.css";
-import ProfileCart from "./profile";
+import "./index.css";
+// import ProfileCart from "./profile";
 const pizzaData = [
   {
     name: "Focaccia",
@@ -49,12 +49,12 @@ const pizzaData = [
 
 function App() {
   return (
-    <ProfileCart />
-    // <div className="container">
-    //   <Header />
-    //   <Menu />
-    //   <Footer />
-    // </div>
+    // <ProfileCart />
+    <div className="container">
+      <Header />
+      <Menu />
+      <Footer />
+    </div>
   );
 }
 
@@ -71,40 +71,65 @@ function Header() {
   );
 }
 function Menu() {
+  const pizzas = pizzaData;
+  // const pizzas = [];
+  const numPizzas = pizzas.length;
   return (
     <main className="menu">
       <h2>Our menu</h2>
+      {numPizzas > 0 && ( //sort circuting
+        <ul className="pizzas">
+          {pizzas.map((pizza) => (
+            // <Pizza name={pizza.name} photoName={pizza.photoName} />
+            <Pizza pizzaObj={pizza} key={pizza.name} />
+          ))}
+        </ul>
+      )}
+
+      {/* <Pizza />
       <Pizza />
-      <Pizza />
-      <Pizza />
+      <Pizza /> */}
     </main>
   );
 }
 function Footer() {
-  return (
-    <>
-      <footer className="footer">
-        {new Date().toLocaleTimeString()}We are currently open!
-      </footer>
-    </>
-  );
-}
-
-function Pizza() {
   const hour = new Date().getHours();
   // console.log(hour);
-  const openHour = 8;
-  const closeHour = 23;
+  const openHour = 20;
+  const closeHour = 22;
   const isOpen = hour >= openHour && hour <= closeHour;
   console.log(isOpen);
   // if (hour >= openHour && hour <= closeHour) alert("we're currently open!");
   // else alert("sorry we closed");
 
   return (
+    <footer className="footer">
+      {isOpen && ( //sort circuiting
+        <div className="order">
+          <p>we're open until {closeHour}:00.Come visite us or order online</p>
+          <button className="btn"> Order</button>
+        </div>
+      )}
+    </footer>
+  );
+  // return (
+  //   <>
+  //     <footer className="footer">
+  //       {new Date().toLocaleTimeString()}We are currently open!
+  //     </footer>
+  //   </>
+  // );
+}
+
+function Pizza(props) {
+  return (
     <>
-      <img src="pizzas/spinaci.jpg" alt="pizza spinaci" />
-      <h3>"Pizza Prosciutto"</h3>
-      <p>Tomato, mozarella, ham, aragula, and burrata cheese</p>
+      <li className="pizza">
+        <img src={props.pizzaObj.photoName} alt={props.pizzaObj.name} />
+        <h3>{props.pizzaObj.name}</h3>
+        <p>{props.pizzaObj.ingredients}</p>
+        <span>{props.pizzaObj.price + 3}</span>
+      </li>
     </>
   );
 }
