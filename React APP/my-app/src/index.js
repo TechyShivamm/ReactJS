@@ -77,14 +77,25 @@ function Menu() {
   return (
     <main className="menu">
       <h2>Our menu</h2>
-      {numPizzas > 0 && ( //sort circuting
+      {numPizzas > 0 ? ( //using turnary opr circuting
         <ul className="pizzas">
           {pizzas.map((pizza) => (
             // <Pizza name={pizza.name} photoName={pizza.photoName} />
             <Pizza pizzaObj={pizza} key={pizza.name} />
           ))}
         </ul>
+      ) : (
+        <p>We're still working on our menu.Please come back later</p>
       )}
+
+      {/* {numPizzas > 0 && ( //sort circuting
+        <ul className="pizzas">
+          {pizzas.map((pizza) => (
+            // <Pizza name={pizza.name} photoName={pizza.photoName} />
+            <Pizza pizzaObj={pizza} key={pizza.name} />
+          ))}
+        </ul>
+      )} */}
 
       {/* <Pizza />
       <Pizza />
@@ -95,7 +106,7 @@ function Menu() {
 function Footer() {
   const hour = new Date().getHours();
   // console.log(hour);
-  const openHour = 20;
+  const openHour = 12;
   const closeHour = 22;
   const isOpen = hour >= openHour && hour <= closeHour;
   console.log(isOpen);
@@ -104,12 +115,23 @@ function Footer() {
 
   return (
     <footer className="footer">
-      {isOpen && ( //sort circuiting
+      {isOpen ? (
+        (<Order closeHour={closeHour} />)() //Turnary circuiting
+      ) : (
+        // <div className="order">
+        //   <p>we're open until {closeHour}:00.Come visite us or order online</p>
+        //   <button className="btn"> Order</button>
+        // </div>
+        <p>
+          We're happy to welcome you between {openHour}.00 and {closeHour}:00.
+        </p>
+      )}
+      {/* {isOpen && ( //sort circuiting
         <div className="order">
           <p>we're open until {closeHour}:00.Come visite us or order online</p>
           <button className="btn"> Order</button>
         </div>
-      )}
+      )} */}
     </footer>
   );
   // return (
@@ -119,6 +141,17 @@ function Footer() {
   //     </footer>
   //   </>
   // );
+}
+
+function Order(props) {
+  return (
+    <div className="order">
+      <p>
+        we're open until {props.closeHour}:00.Come visite us or order online
+      </p>
+      <button className="btn"> Order</button>
+    </div>
+  );
 }
 
 function Pizza(props) {
